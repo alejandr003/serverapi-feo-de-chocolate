@@ -1,0 +1,20 @@
+{
+  "name": "serverapi2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "author": "Jesus Alejandro",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^4.21.2",
+    "mysql2": "^3.14.1",
+    "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
