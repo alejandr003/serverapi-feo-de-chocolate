@@ -45,4 +45,15 @@ router.post('/eliminar', async function (req, res) {
     }
 });
 
+router.post('/actualizar', async function (req, res) {
+    try {
+        console.log("Recibido en /actualizar:", req.body);
+        const result = await controlador.actualizar(req.body);
+        respuesta.success(req, res, 200, result);
+    } catch (error) {
+        console.error("Error en ruta POST /actualizar:", error);
+        respuesta.error(req, res, 500, 'Error al actualizar datos de luz', error);
+    }
+});
+
 module.exports = router;

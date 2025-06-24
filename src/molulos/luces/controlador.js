@@ -72,6 +72,46 @@ async function eliminar(body) {
     }
 }
 
+async function actualizar(body) {
+    try {
+        if (!body.id) {
+            return { status: false, mensaje: 'Falta el ID obligatorio para actualizar' };
+        }
+        
+        // Inicializamos el objeto con el ID
+        const datosActualizados = {
+            id: parseInt(body.id)
+        };
+        
+        // Solo incluimos ubicación si está presente en el body
+        if (body.ubicacion !== undefined) {
+            datosActualizados.ubicacion = body.ubicacion;
+        }
+        
+        // Solo incluimos estatus si está presente en el body
+        if (body.estatus !== undefined) {
+            // Convertir a número entero si es true/false o 1/0
+            if (typeof body.estatus === 'boolean') {
+                datosActualizados.estatus = body.estatus ? 1 : 0;
+            } else {
+                const estatusValor = parseInt(body.estatus);
+                datosActualizados.estatus = isNaN(estatusValor) ? 0 : estatusValor;
+            }
+        }
+        
+        // Verificamos que haya al menos un campo para actualizar además del ID
+        if (Object.keys(datosActualizados).length <= 1) {
+            return { status: false, mensaje: 'No hay campos para actualizar' };
+        }
+        
+        console.log("Datos a actualizar:", datosActualizados);
+        return await bd.actualizar(TABLA, datosActualizados);
+    } catch (error) {
+        console.error("Error en actualizar/luces:", error);
+        return { status: false, mensaje: "Error al actualizar luz" };
+    }
+}
+
 module.exports = {
-    todos, uno, agregar, eliminar
+    todos, uno, agregar, eliminar,  actualizar
 };
